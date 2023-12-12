@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source">
+      <UniqueIdentifier>{c2c2ca1d-dfab-4907-9469-abc1e7abb52e}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\ThirdParty\glad.c">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Shader.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ThirdParty\imgui.cpp" />
+    <ClCompile Include="src\ThirdParty\imgui_demo.cpp" />
+    <ClCompile Include="src\ThirdParty\imgui_draw.cpp" />
+    <ClCompile Include="src\ThirdParty\imgui_impl_glfw.cpp" />
+    <ClCompile Include="src\ThirdParty\imgui_impl_opengl3.cpp" />
+    <ClCompile Include="src\ThirdParty\imgui_tables.cpp" />
+    <ClCompile Include="src\ThirdParty\imgui_widgets.cpp" />
+    <ClCompile Include="src\Engine\FrameBuffer.cpp" />
+    <ClCompile Include="src\Engine\Engine.cpp" />
+    <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\Engine\Renderer.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="src\Ressources\Shaders\vertex.sh">
+      <Filter>Source</Filter>
+    </None>
+    <None Include="src\Ressources\Shaders\fragment.sh">
+      <Filter>Source</Filter>
+    </None>
+    <None Include="imgui.ini" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\Engine\Shader.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ThirdParty\imconfig.h" />
+    <ClInclude Include="src\ThirdParty\imgui.h" />
+    <ClInclude Include="src\ThirdParty\imgui_impl_glfw.h" />
+    <ClInclude Include="src\ThirdParty\imgui_impl_opengl3.h" />
+    <ClInclude Include="src\ThirdParty\imgui_impl_opengl3_loader.h" />
+    <ClInclude Include="src\ThirdParty\imgui_internal.h" />
+    <ClInclude Include="src\ThirdParty\imstb_rectpack.h" />
+    <ClInclude Include="src\ThirdParty\imstb_textedit.h" />
+    <ClInclude Include="src\ThirdParty\imstb_truetype.h" />
+    <ClInclude Include="include\Engine\FrameBuffer.h" />
+    <ClInclude Include="include\Engine\Engine.h" />
+    <ClInclude Include="include\Engine\Renderer.h" />
+    <ClInclude Include="src\ThirdParty\stb_image.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="src\Ressources\Textures\container.jpg" />
+  </ItemGroup>
+</Project>
