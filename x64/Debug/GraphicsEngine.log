@@ -1,0 +1,5 @@
+﻿  Engine.cpp
+C:\Users\Aymeric ROBERT\Documents\Projects\Visual Studio\GraphicsEngine\src\Engine\Engine.cpp(66,34): warning C4244: 'argument': conversion from 'const float' to 'GLsizei', possible loss of data
+C:\Users\Aymeric ROBERT\Documents\Projects\Visual Studio\GraphicsEngine\src\Engine\Engine.cpp(66,20): warning C4244: 'argument': conversion from 'const float' to 'GLsizei', possible loss of data
+C:\Users\Aymeric ROBERT\Documents\Projects\Visual Studio\GraphicsEngine\src\Engine\Engine.cpp(69,4): warning C4312: 'type cast': conversion from 'GLuint' to 'void *' of greater size
+  GraphicsEngine.vcxproj -> C:\Users\Aymeric ROBERT\Documents\Projects\Visual Studio\GraphicsEngine\x64\Debug\GraphicsEngine.exe
