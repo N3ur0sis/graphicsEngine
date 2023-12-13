@@ -23,6 +23,7 @@
     <ClCompile Include="src\Engine\Engine.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\Engine\Renderer.cpp" />
+    <ClCompile Include="src\Engine\Camera.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="src\Ressources\Shaders\vertex.sh">
@@ -32,6 +33,8 @@
       <Filter>Source</Filter>
     </None>
     <None Include="imgui.ini" />
+    <None Include=".gitignore" />
+    <None Include="README.md" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Engine\Shader.h">
@@ -50,6 +53,7 @@
     <ClInclude Include="include\Engine\Engine.h" />
     <ClInclude Include="include\Engine\Renderer.h" />
     <ClInclude Include="src\ThirdParty\stb_image.h" />
+    <ClInclude Include="include\Engine\Camera.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="src\Ressources\Textures\container.jpg" />

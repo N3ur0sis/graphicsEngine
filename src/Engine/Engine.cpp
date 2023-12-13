@@ -11,6 +11,7 @@ Engine::Engine(GLFWwindow* window) : window(window), shader("src/Ressources/Shad
 	renderer.initialize();
 	frameBuffer.create();
 	initializeImGui();
+	
 }
 
 
@@ -30,7 +31,6 @@ void Engine::run()
 	double lastTime = glfwGetTime();
 	int nbFrames = 0;
 
-
 	//Render loop
 	while(!glfwWindowShouldClose(window)) {
 
@@ -45,10 +45,15 @@ void Engine::run()
 
 
 
+		float currentFrame = glfwGetTime();
+		deltaTime = currentFrame - lastFrame;
+		lastFrame = currentFrame;
+
+
 
 		glfwPollEvents();
 
-
+		processInput(window);
 		ImGui_ImplOpenGL3_NewFrame();
 		ImGui_ImplGlfw_NewFrame();
 		ImGui::NewFrame();
@@ -78,13 +83,14 @@ void Engine::run()
 		renderer.bindtex();
 		shader.use();
 
-		// create transformations
+		// pass projection matrix to shader (note that in this case it could change every frame)
+		glm::mat4 projection = glm::perspective(glm::radians(fov), (float)window_width / (float)window_height, 0.1f, 100.0f);
+		shader.setMat4("projection", projection);
+
+		// camera/view transformation
+		glm::mat4 view = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
+		shader.setMat4("view", view);
 		glm::mat4 model = glm::mat4(1.0f);
-		glm::mat4 view = glm::mat4(1.0f);
-		glm::mat4 projection = glm::mat4(1.0f);
-		model = glm::rotate(model, (float)glfwGetTime(), glm::vec3(0.5f, 1.0f, 0.0f));
-		view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
-		projection = glm::perspective(glm::radians(45.0f), (float)800 / (float)600, 0.1f, 100.0f);
 		// retrieve the matrix uniform locations
 		unsigned int modelLoc = glGetUniformLocation(shader.ID, "model");
 		unsigned int viewLoc = glGetUniformLocation(shader.ID, "view");
@@ -98,6 +104,7 @@ void Engine::run()
 		glClear(GL_COLOR_BUFFER_BIT);
 		glClear(GL_DEPTH_BUFFER_BIT);
 		renderer.render();
+		
 		frameBuffer.unbind();
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 		if (IO.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
@@ -115,8 +122,22 @@ void Engine::run()
 	frameBuffer.~Framebuffer();
 }
 
-void Engine::processInput()
+void Engine::processInput(GLFWwindow* window)
 {
+
+	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
+		glfwSetWindowShouldClose(window, true);
+	float cameraSpeed = 2.5f * deltaTime;
+
+
+	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
+		cameraPos += cameraSpeed * cameraFront;
+	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
+		cameraPos -= cameraSpeed * cameraFront;
+	if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
+		cameraPos -= glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
+	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
+		cameraPos += glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
 }
 
 void Engine::initializeImGui()
@@ -148,4 +169,41 @@ void Engine::cleanupImGui()
 	ImGui_ImplOpenGL3_Shutdown();
 	ImGui_ImplGlfw_Shutdown();
 	ImGui::DestroyContext();
+}
+
+void Engine::mouse_callback(GLFWwindow* window, double xposIn, double yposIn)
+{
+	float xpos = static_cast<float>(xposIn);
+	float ypos = static_cast<float>(yposIn);
+
+	if (firstMouse)
+	{
+		lastX = xpos;
+		lastY = ypos;
+		firstMouse = false;
+	}
+
+	float xoffset = xpos - lastX;
+	float yoffset = lastY - ypos; // reversed since y-coordinates go from bottom to top
+	lastX = xpos;
+	lastY = ypos;
+
+	float sensitivity = 0.1f; // change this value to your liking
+	xoffset *= sensitivity;
+	yoffset *= sensitivity;
+
+	yaw += xoffset;
+	pitch += yoffset;
+
+	// make sure that when pitch is out of bounds, screen doesn't get flipped
+	if (pitch > 89.0f)
+		pitch = 89.0f;
+	if (pitch < -89.0f)
+		pitch = -89.0f;
+
+	glm::vec3 front;
+	front.x = cos(glm::radians(yaw)) * cos(glm::radians(pitch));
+	front.y = sin(glm::radians(pitch));
+	front.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
+	cameraFront = glm::normalize(front);
 }

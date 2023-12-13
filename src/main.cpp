@@ -4,8 +4,10 @@
 #include "Engine/Engine.h"
 
 //Declaration
+void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 
+float lastX = 400, lastY = 300;
 int main() {
 
 	//Initialize GLFW 
@@ -28,6 +30,8 @@ int main() {
 	glfwMakeContextCurrent(window);
 	glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 
+
+
 	//Initialize GLAD
 	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
 		std::cout << "Failed to initialize GLAD" << std::endl;
@@ -37,7 +41,15 @@ int main() {
 
 	//initilazing engine.
 	Engine app(window);
+
+
+	glfwSetWindowUserPointer(window, &app);
+	glfwSetCursorPosCallback(window, mouse_callback);
+	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+
+	//Launch Engine (render loop);
 	app.run();
+
 
 
 	glfwTerminate();
@@ -52,6 +64,10 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 	glViewport(0, 0, width, height);
 }
 
+void mouse_callback(GLFWwindow* window, double xpos, double ypos) {
+	Engine* ptr = (Engine*)glfwGetWindowUserPointer(window);
+	ptr->mouse_callback(window, xpos, ypos);
+}
 
 
 
