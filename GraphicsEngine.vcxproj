@@ -133,6 +133,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Engine\Camera.cpp" />
     <ClCompile Include="src\Engine\Renderer.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\Engine\Engine.cpp" />
@@ -148,6 +149,7 @@
     <ClCompile Include="src\ThirdParty\imgui_widgets.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\Engine\Camera.h" />
     <ClInclude Include="include\Engine\Engine.h" />
     <ClInclude Include="include\Engine\FrameBuffer.h" />
     <ClInclude Include="include\Engine\Shader.h" />
@@ -164,7 +166,9 @@
     <ClInclude Include="src\ThirdParty\stb_image.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include=".gitignore" />
     <None Include="imgui.ini" />
+    <None Include="README.md" />
     <None Include="src\Ressources\Shaders\fragment.sh" />
     <None Include="src\Ressources\Shaders\vertex.sh" />
   </ItemGroup>
